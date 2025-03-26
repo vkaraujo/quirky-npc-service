@@ -40,7 +40,9 @@ MOODS = [
     name: NAMES.sample,
     job: JOBS.sample,
     quirk: QUIRKS.sample,
-    mood: MOODS.sample
+    mood: MOODS.sample,
+    species: NpcGeneratorService::SPECIES.sample,
+    alignment: NpcGeneratorService::ALIGNMENTS.sample
   )
 end
 

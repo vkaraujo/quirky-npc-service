@@ -20,12 +20,24 @@ class NpcGeneratorService
     "suspiciously friendly", "dramatically bored", "quietly panicked", "whimsically angry"
   ]
 
+  SPECIES = [
+    "Human", "Elf", "Dwarf", "Halfling", "Gnome", "Half-Orc", "Dragonborn", "Tiefling", "Goblin", "Fairy"
+  ]
+
+  ALIGNMENTS = [
+    "Lawful Good", "Neutral Good", "Chaotic Good",
+    "Lawful Neutral", "True Neutral", "Chaotic Neutral",
+    "Lawful Evil", "Neutral Evil", "Chaotic Evil"
+  ]
+
   def self.generate(params = {})
     {
       name: params[:name] || NAMES.sample,
       job: params[:job] || JOBS.sample,
       quirk: params[:quirk] || QUIRKS.sample,
-      mood: params[:mood] || MOODS.sample
+      mood: params[:mood] || MOODS.sample,
+      species: params[:species] || SPECIES.sample,
+      alignment: params[:alignment] || ALIGNMENTS.sample
     }
   end
 end

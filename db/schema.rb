@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_26_044721) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_26_143651) do
   create_table "npcs", force: :cascade do |t|
     t.string "name"
     t.string "job"
@@ -18,6 +18,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_26_044721) do
     t.string "mood"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "species"
+    t.string "alignment"
   end
 
 end

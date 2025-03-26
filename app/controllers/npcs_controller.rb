@@ -1,6 +1,10 @@
 class NpcsController < ApplicationController
   def index
-    @pagy, @npcs = pagy(Npc.all)
+    filtered = Npc.all
+    filtered = filtered.by_species(params[:species])
+    filtered = filtered.by_alignment(params[:alignment])
+  
+    @pagy, @npcs = pagy(filtered)
     render json: {
       npcs: ActiveModelSerializers::SerializableResource.new(@npcs),
       pagination: {
@@ -23,7 +27,7 @@ class NpcsController < ApplicationController
   end
 
   def generate
-    npc_data = NpcGeneratorService.generate(params.permit(:name, :job, :quirk, :mood))
+    npc_data = NpcGeneratorService.generate(params.permit(:name, :job, :quirk, :mood, :species, :alignment))
     render json: npc_data
   end
 
@@ -57,6 +61,6 @@ class NpcsController < ApplicationController
   private
 
   def npc_params
-    params.require(:npc).permit(:name, :job, :quirk, :mood)
+    params.require(:npc).permit(:name, :job, :quirk, :mood, :species, :alignment)
   end
 end

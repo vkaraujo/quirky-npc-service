@@ -1,5 +1,5 @@
 class NpcSerializer < ActiveModel::Serializer
-  attributes :id, :name, :job, :quirk, :mood, :greeting
+  attributes :id, :name, :job, :quirk, :mood, :species, :alignment, :greeting
 
   def greeting
     "Greetings, I am #{object.name}, your humble #{object.job}!"

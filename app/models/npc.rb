@@ -1,4 +1,8 @@
 class Npc < ApplicationRecord
+  validates :name, :job, :quirk, :mood, presence: true
+  validates :species, inclusion: { in: NpcAttributes.species }
+  validates :alignment, inclusion: { in: NpcAttributes.alignments }
+
   SPECIES = NpcAttributes.species
   ALIGNMENTS = NpcAttributes.alignments
 
@@ -16,5 +20,9 @@ class Npc < ApplicationRecord
     normalized = alignment.strip.titleize
     raise ArgumentError, "Invalid alignment: #{alignment}" unless ALIGNMENTS.include?(normalized)
     where(alignment: normalized)
+  end
+
+  def greeting
+    "Greetings, I am #{self.name}, your humble #{self.job}!"
   end
 end

@@ -24,6 +24,10 @@ RSpec.configure do |config|
       paths: {},
       servers: [
         {
+          url: 'http://localhost:3000',
+          description: 'Local server'
+        },
+        {
           url: 'https://{defaultHost}',
           variables: {
             defaultHost: {
@@ -40,4 +44,5 @@ RSpec.configure do |config|
   # the key, this may want to be changed to avoid putting yaml in json files.
   # Defaults to json. Accepts ':json' and ':yaml'.
   config.openapi_format = :yaml
+  config.include FactoryBot::Syntax::Methods
 end

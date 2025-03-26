@@ -1,13 +1,6 @@
 class Npc < ApplicationRecord
-  SPECIES = [
-    "Human", "Elf", "Dwarf", "Halfling", "Gnome", "Half-Orc", "Dragonborn", "Tiefling", "Goblin", "Fairy"
-  ]
-
-  ALIGNMENTS = [
-    "Lawful Good", "Neutral Good", "Chaotic Good",
-    "Lawful Neutral", "True Neutral", "Chaotic Neutral",
-    "Lawful Evil", "Neutral Evil", "Chaotic Evil"
-  ]
+  SPECIES = NpcAttributes.species
+  ALIGNMENTS = NpcAttributes.alignments
 
   scope :by_species, ->(species) do
     return all unless species.present?

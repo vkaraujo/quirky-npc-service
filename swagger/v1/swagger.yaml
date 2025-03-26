@@ -56,6 +56,33 @@ paths:
           description: NPCs retrieved
           content:
             application/json:
+              examples:
+                npc_index_response:
+                  value:
+                    npcs:
+                    - id: 1
+                      name: Zarnak Doomwhisper
+                      job: Dragon Dentist
+                      quirk: Obsessed with ducks
+                      mood: Quietly panicked
+                      species: Half-Orc
+                      alignment: Chaotic Evil
+                      greeting: Greetings, I am Zarnak Doomwhisper, your humble Dragon
+                        Dentist!
+                    - id: 2
+                      name: Tilda Fizzlepot
+                      job: Potion Tester
+                      quirk: Only speaks in rhymes
+                      mood: Suspiciously friendly
+                      species: Gnome
+                      alignment: Chaotic Neutral
+                      greeting: Greetings, I am Tilda Fizzlepot, your humble Potion
+                        Tester!
+                    pagination:
+                      page: 1
+                      items: 5
+                      pages: 1
+                      count: 2
               schema:
                 type: object
                 properties:
@@ -99,6 +126,20 @@ paths:
       responses:
         '201':
           description: NPC created
+          content:
+            application/json:
+              examples:
+                npc_response:
+                  value:
+                    id: 42
+                    name: Snorgus the Flatulent
+                    job: Goblin Negotiator
+                    quirk: Believes they are a potato
+                    mood: Dramatically bored
+                    species: Goblin
+                    alignment: Chaotic Neutral
+                    greeting: Greetings, I am Snorgus the Flatulent, your humble Goblin
+                      Negotiator!
       requestBody:
         content:
           application/json:
@@ -110,12 +151,16 @@ paths:
                   properties:
                     name:
                       type: string
+                      example: Snorgus the Flatulent
                     job:
                       type: string
+                      example: Goblin Negotiator
                     quirk:
                       type: string
+                      example: Believes they are a potato
                     mood:
                       type: string
+                      example: Dramatically bored
                     species:
                       type: string
                       enum:
@@ -190,12 +235,16 @@ paths:
                   properties:
                     name:
                       type: string
+                      example: Tilda Fizzlepot
                     job:
                       type: string
+                      example: Potion Tester
                     quirk:
                       type: string
+                      example: Only speaks in rhymes
                     mood:
                       type: string
+                      example: Melancholic but hopeful
                     species:
                       type: string
                       enum:
@@ -209,6 +258,7 @@ paths:
                       - Tiefling
                       - Goblin
                       - Fairy
+                      example: Halfling
                     alignment:
                       type: string
                       enum:
@@ -221,6 +271,7 @@ paths:
                       - Lawful Evil
                       - Neutral Evil
                       - Chaotic Evil
+                      example: Lawful Good
     delete:
       summary: Delete an NPC
       tags:
@@ -253,12 +304,16 @@ paths:
               properties:
                 name:
                   type: string
+                  example: Brum the Quiet
                 job:
                   type: string
+                  example: Wand Polisher
                 quirk:
                   type: string
+                  example: Collects spoons
                 mood:
                   type: string
+                  example: Mysteriously excited
                 species:
                   type: string
                   enum:
@@ -272,6 +327,7 @@ paths:
                   - Tiefling
                   - Goblin
                   - Fairy
+                  example: Elf
                 alignment:
                   type: string
                   enum:
@@ -284,6 +340,7 @@ paths:
                   - Lawful Evil
                   - Neutral Evil
                   - Chaotic Evil
+                  example: True Neutral
 servers:
 - url: http://localhost:3000
   description: Local server

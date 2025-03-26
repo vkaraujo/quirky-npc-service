@@ -7,12 +7,12 @@ RSpec.describe 'NPCs API', type: :request do
       produces 'application/json'
       parameter name: :species, in: :query, schema: {
         type: :string,
-        enum: Npc::SPECIES
+        enum: NpcAttributes.species
       }, description: 'Filter NPCs by species (e.g. Elf, Goblin, Fairy)'
 
       parameter name: :alignment, in: :query, schema: {
         type: :string,
-        enum: Npc::ALIGNMENTS
+        enum: NpcAttributes.alignments
       }, description: 'Filter NPCs by D&D alignment (e.g. Chaotic Neutral)'
 
       parameter name: :page, in: :query, type: :integer, description: 'Page number'
@@ -55,6 +55,37 @@ RSpec.describe 'NPCs API', type: :request do
           create_list(:npc, 3)
         end
 
+        example 'application/json', :npc_index_response, {
+          npcs: [
+            {
+              id: 1,
+              name: "Zarnak Doomwhisper",
+              job: "Dragon Dentist",
+              quirk: "Obsessed with ducks",
+              mood: "Quietly panicked",
+              species: "Half-Orc",
+              alignment: "Chaotic Evil",
+              greeting: "Greetings, I am Zarnak Doomwhisper, your humble Dragon Dentist!"
+            },
+            {
+              id: 2,
+              name: "Tilda Fizzlepot",
+              job: "Potion Tester",
+              quirk: "Only speaks in rhymes",
+              mood: "Suspiciously friendly",
+              species: "Gnome",
+              alignment: "Chaotic Neutral",
+              greeting: "Greetings, I am Tilda Fizzlepot, your humble Potion Tester!"
+            }
+          ],
+          pagination: {
+            page: 1,
+            items: 5,
+            pages: 1,
+            count: 2
+          }
+        }
+
         run_test!
       end
     end
@@ -69,17 +100,17 @@ RSpec.describe 'NPCs API', type: :request do
           npc: {
             type: :object,
             properties: {
-              name: { type: :string },
-              job: { type: :string },
-              quirk: { type: :string },
-              mood: { type: :string },
+              name: { type: :string, example: 'Snorgus the Flatulent' },
+              job: { type: :string, example: 'Goblin Negotiator' },
+              quirk: { type: :string, example: 'Believes they are a potato' },
+              mood: { type: :string, example: 'Dramatically bored' },
               species: {
                 type: :string,
-                enum: Npc::SPECIES
+                enum: NpcAttributes.species
               },
               alignment: {
                 type: :string,
-                enum: Npc::ALIGNMENTS
+                enum: NpcAttributes.alignments
               }
             },
             required: %w[name job quirk mood species alignment]
@@ -88,14 +119,25 @@ RSpec.describe 'NPCs API', type: :request do
       }
 
       response '201', 'NPC created' do
+        example 'application/json', :npc_response, {
+          id: 42,
+          name: "Snorgus the Flatulent",
+          job: "Goblin Negotiator",
+          quirk: "Believes they are a potato",
+          mood: "Dramatically bored",
+          species: "Goblin",
+          alignment: "Chaotic Neutral",
+          greeting: "Greetings, I am Snorgus the Flatulent, your humble Goblin Negotiator!"
+        }
+
         let(:npc) do
           {
             npc: {
-              name: "Flimble Tweak",
-              job: "Potion Tester",
-              quirk: "collects spoons",
-              mood: "quietly panicked",
-              species: "Gnome",
+              name: "Snorgus the Flatulent",
+              job: "Goblin Negotiator",
+              quirk: "Believes they are a potato",
+              mood: "Dramatically bored",
+              species: "Goblin",
               alignment: "Chaotic Neutral"
             }
           }
@@ -134,17 +176,19 @@ RSpec.describe 'NPCs API', type: :request do
           npc: {
             type: :object,
             properties: {
-              name: { type: :string },
-              job: { type: :string },
-              quirk: { type: :string },
-              mood: { type: :string },
+              name: { type: :string, example: 'Tilda Fizzlepot' },
+              job: { type: :string, example: 'Potion Tester' },
+              quirk: { type: :string, example: 'Only speaks in rhymes' },
+              mood: { type: :string, example: 'Melancholic but hopeful' },
               species: {
                 type: :string,
-                enum: Npc::SPECIES
+                enum: NpcAttributes.species,
+                example: 'Halfling'
               },
               alignment: {
                 type: :string,
-                enum: Npc::ALIGNMENTS
+                enum: NpcAttributes.alignments,
+                example: 'Lawful Good'
               }
             }
           }
@@ -196,17 +240,19 @@ RSpec.describe 'NPCs API', type: :request do
       parameter name: :npc, in: :body, schema: {
         type: :object,
         properties: {
-          name: { type: :string },
-          job: { type: :string },
-          quirk: { type: :string },
-          mood: { type: :string },
+          name: { type: :string, example: 'Brum the Quiet' },
+          job: { type: :string, example: 'Wand Polisher' },
+          quirk: { type: :string, example: 'Collects spoons' },
+          mood: { type: :string, example: 'Mysteriously excited' },
           species: {
             type: :string,
-            enum: Npc::SPECIES
+            enum: NpcAttributes.species,
+            example: 'Elf'
           },
           alignment: {
             type: :string,
-            enum: Npc::ALIGNMENTS
+            enum: NpcAttributes.alignments,
+            example: 'True Neutral'
           }
         }
       }

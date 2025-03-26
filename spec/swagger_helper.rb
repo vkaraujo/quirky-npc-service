@@ -21,6 +21,16 @@ RSpec.configure do |config|
         title: 'API V1',
         version: 'v1'
       },
+      tags: [
+        {
+          name: 'NPC Management',
+          description: 'CRUD endpoints for managing saved NPCs'
+        },
+        {
+          name: 'Generation',
+          description: 'Endpoints that generate random, ephemeral NPCs'
+        }
+      ],
       paths: {},
       servers: [
         {

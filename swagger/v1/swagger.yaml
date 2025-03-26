@@ -1,0 +1,293 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+tags:
+- name: NPC Management
+  description: CRUD endpoints for managing saved NPCs
+- name: Generation
+  description: Endpoints that generate random, ephemeral NPCs
+paths:
+  "/npcs":
+    get:
+      summary: List all NPCs
+      tags:
+      - NPC Management
+      parameters:
+      - name: species
+        in: query
+        schema:
+          type: string
+          enum:
+          - Human
+          - Elf
+          - Dwarf
+          - Halfling
+          - Gnome
+          - Half-Orc
+          - Dragonborn
+          - Tiefling
+          - Goblin
+          - Fairy
+        description: Filter NPCs by species (e.g. Elf, Goblin, Fairy)
+      - name: alignment
+        in: query
+        schema:
+          type: string
+          enum:
+          - Lawful Good
+          - Neutral Good
+          - Chaotic Good
+          - Lawful Neutral
+          - True Neutral
+          - Chaotic Neutral
+          - Lawful Evil
+          - Neutral Evil
+          - Chaotic Evil
+        description: Filter NPCs by D&D alignment (e.g. Chaotic Neutral)
+      - name: page
+        in: query
+        description: Page number
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: NPCs retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  npcs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        job:
+                          type: string
+                        quirk:
+                          type: string
+                        mood:
+                          type: string
+                        species:
+                          type: string
+                        alignment:
+                          type: string
+                        greeting:
+                          type: string
+                  pagination:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                      items:
+                        type: integer
+                      pages:
+                        type: integer
+                      count:
+                        type: integer
+    post:
+      summary: Create a new NPC
+      tags:
+      - NPC Management
+      parameters: []
+      responses:
+        '201':
+          description: NPC created
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                npc:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    job:
+                      type: string
+                    quirk:
+                      type: string
+                    mood:
+                      type: string
+                    species:
+                      type: string
+                      enum:
+                      - Human
+                      - Elf
+                      - Dwarf
+                      - Halfling
+                      - Gnome
+                      - Half-Orc
+                      - Dragonborn
+                      - Tiefling
+                      - Goblin
+                      - Fairy
+                    alignment:
+                      type: string
+                      enum:
+                      - Lawful Good
+                      - Neutral Good
+                      - Chaotic Good
+                      - Lawful Neutral
+                      - True Neutral
+                      - Chaotic Neutral
+                      - Lawful Evil
+                      - Neutral Evil
+                      - Chaotic Evil
+                  required:
+                  - name
+                  - job
+                  - quirk
+                  - mood
+                  - species
+                  - alignment
+  "/npcs/{id}":
+    get:
+      summary: Retrieve a specific NPC by ID
+      tags:
+      - NPC Management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: NPC found
+        '404':
+          description: NPC not found
+    patch:
+      summary: Update an existing NPC
+      tags:
+      - NPC Management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: NPC updated
+        '404':
+          description: NPC not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                npc:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    job:
+                      type: string
+                    quirk:
+                      type: string
+                    mood:
+                      type: string
+                    species:
+                      type: string
+                      enum:
+                      - Human
+                      - Elf
+                      - Dwarf
+                      - Halfling
+                      - Gnome
+                      - Half-Orc
+                      - Dragonborn
+                      - Tiefling
+                      - Goblin
+                      - Fairy
+                    alignment:
+                      type: string
+                      enum:
+                      - Lawful Good
+                      - Neutral Good
+                      - Chaotic Good
+                      - Lawful Neutral
+                      - True Neutral
+                      - Chaotic Neutral
+                      - Lawful Evil
+                      - Neutral Evil
+                      - Chaotic Evil
+    delete:
+      summary: Delete an NPC
+      tags:
+      - NPC Management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: NPC deleted
+        '404':
+          description: NPC not found
+  "/npcs/generate":
+    post:
+      summary: Generate a random, ephemeral NPC
+      tags:
+      - Generation
+      parameters: []
+      responses:
+        '200':
+          description: NPC generated
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                job:
+                  type: string
+                quirk:
+                  type: string
+                mood:
+                  type: string
+                species:
+                  type: string
+                  enum:
+                  - Human
+                  - Elf
+                  - Dwarf
+                  - Halfling
+                  - Gnome
+                  - Half-Orc
+                  - Dragonborn
+                  - Tiefling
+                  - Goblin
+                  - Fairy
+                alignment:
+                  type: string
+                  enum:
+                  - Lawful Good
+                  - Neutral Good
+                  - Chaotic Good
+                  - Lawful Neutral
+                  - True Neutral
+                  - Chaotic Neutral
+                  - Lawful Evil
+                  - Neutral Evil
+                  - Chaotic Evil
+servers:
+- url: http://localhost:3000
+  description: Local server
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com

@@ -54,3 +54,4 @@ gem 'active_model_serializers'
 # For API docs
 gem 'rswag'
 
+gem 'active_model_serializers'

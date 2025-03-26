@@ -9,4 +9,9 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  resources :npcs, only: [:index, :show, :create, :update, :destroy]
+
+  get 'npcs/random', to: 'npcs#random'
+  get 'npcs/generate_preview', to: 'npcs#generate'
+  post 'npcs/generate', to: 'npcs#generate'
 end

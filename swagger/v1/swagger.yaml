@@ -10,6 +10,81 @@ tags:
   description: Endpoints that generate random, ephemeral NPCs
 paths:
   "/npcs":
+    post:
+      summary: Create a new NPC
+      tags:
+      - NPC Management
+      parameters: []
+      responses:
+        '201':
+          description: NPC created
+          content:
+            application/json:
+              examples:
+                npc_response:
+                  value:
+                    id: 42
+                    name: Snorgus the Flatulent
+                    job: Goblin Negotiator
+                    quirk: Believes they are a potato
+                    mood: Dramatically bored
+                    species: Goblin
+                    alignment: Chaotic Neutral
+                    greeting: Greetings, I am Snorgus the Flatulent, your humble Goblin
+                      Negotiator!
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                npc:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: Snorgus the Flatulent
+                    job:
+                      type: string
+                      example: Goblin Negotiator
+                    quirk:
+                      type: string
+                      example: Believes they are a potato
+                    mood:
+                      type: string
+                      example: Dramatically bored
+                    species:
+                      type: string
+                      enum:
+                      - Human
+                      - Elf
+                      - Dwarf
+                      - Halfling
+                      - Gnome
+                      - Half-Orc
+                      - Dragonborn
+                      - Tiefling
+                      - Goblin
+                      - Fairy
+                    alignment:
+                      type: string
+                      enum:
+                      - Lawful Good
+                      - Neutral Good
+                      - Chaotic Good
+                      - Lawful Neutral
+                      - True Neutral
+                      - Chaotic Neutral
+                      - Lawful Evil
+                      - Neutral Evil
+                      - Chaotic Evil
+                  required:
+                  - name
+                  - job
+                  - quirk
+                  - mood
+                  - species
+                  - alignment
     get:
       summary: List all NPCs
       tags:
@@ -118,82 +193,22 @@ paths:
                         type: integer
                       count:
                         type: integer
-    post:
-      summary: Create a new NPC
+  "/npcs/{id}":
+    delete:
+      summary: Delete an NPC
       tags:
       - NPC Management
-      parameters: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
       responses:
-        '201':
-          description: NPC created
-          content:
-            application/json:
-              examples:
-                npc_response:
-                  value:
-                    id: 42
-                    name: Snorgus the Flatulent
-                    job: Goblin Negotiator
-                    quirk: Believes they are a potato
-                    mood: Dramatically bored
-                    species: Goblin
-                    alignment: Chaotic Neutral
-                    greeting: Greetings, I am Snorgus the Flatulent, your humble Goblin
-                      Negotiator!
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                npc:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                      example: Snorgus the Flatulent
-                    job:
-                      type: string
-                      example: Goblin Negotiator
-                    quirk:
-                      type: string
-                      example: Believes they are a potato
-                    mood:
-                      type: string
-                      example: Dramatically bored
-                    species:
-                      type: string
-                      enum:
-                      - Human
-                      - Elf
-                      - Dwarf
-                      - Halfling
-                      - Gnome
-                      - Half-Orc
-                      - Dragonborn
-                      - Tiefling
-                      - Goblin
-                      - Fairy
-                    alignment:
-                      type: string
-                      enum:
-                      - Lawful Good
-                      - Neutral Good
-                      - Chaotic Good
-                      - Lawful Neutral
-                      - True Neutral
-                      - Chaotic Neutral
-                      - Lawful Evil
-                      - Neutral Evil
-                      - Chaotic Evil
-                  required:
-                  - name
-                  - job
-                  - quirk
-                  - mood
-                  - species
-                  - alignment
-  "/npcs/{id}":
+        '204':
+          description: NPC deleted
+        '404':
+          description: NPC not found
     get:
       summary: Retrieve a specific NPC by ID
       tags:
@@ -272,21 +287,6 @@ paths:
                       - Neutral Evil
                       - Chaotic Evil
                       example: Lawful Good
-    delete:
-      summary: Delete an NPC
-      tags:
-      - NPC Management
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-      responses:
-        '204':
-          description: NPC deleted
-        '404':
-          description: NPC not found
   "/npcs/generate":
     post:
       summary: Generate a random, ephemeral NPC

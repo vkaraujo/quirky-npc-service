@@ -14,4 +14,12 @@ Rails.application.routes.draw do
   get 'npcs/random', to: 'npcs#random'
   get 'npcs/generate_preview', to: 'npcs#generate'
   post 'npcs/generate', to: 'npcs#generate'
+
+  root to: proc {
+    [
+      200,
+      { 'Content-Type' => 'application/json' },
+      [{ message: 'Welcome to the Quirky NPC API ✨', docs: '/api-docs' }.to_json]
+    ]
+  }
 end

@@ -290,57 +290,13 @@ paths:
   "/npcs/generate":
     post:
       summary: Generate a random, ephemeral NPC
+      description: This endpoint creates a new NPC using randomized values for every
+        attribute. You don’t need to send anything — just click Execute!
       tags:
       - Generation
-      parameters: []
       responses:
         '200':
           description: NPC generated
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: Brum the Quiet
-                job:
-                  type: string
-                  example: Wand Polisher
-                quirk:
-                  type: string
-                  example: Collects spoons
-                mood:
-                  type: string
-                  example: Mysteriously excited
-                species:
-                  type: string
-                  enum:
-                  - Human
-                  - Elf
-                  - Dwarf
-                  - Halfling
-                  - Gnome
-                  - Half-Orc
-                  - Dragonborn
-                  - Tiefling
-                  - Goblin
-                  - Fairy
-                  example: Elf
-                alignment:
-                  type: string
-                  enum:
-                  - Lawful Good
-                  - Neutral Good
-                  - Chaotic Good
-                  - Lawful Neutral
-                  - True Neutral
-                  - Chaotic Neutral
-                  - Lawful Evil
-                  - Neutral Evil
-                  - Chaotic Evil
-                  example: True Neutral
 servers:
 - url: https://quirky-npc-service.onrender.com
   description: Current environment server

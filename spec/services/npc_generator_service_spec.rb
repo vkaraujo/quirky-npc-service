@@ -16,16 +16,5 @@ RSpec.describe NpcGeneratorService do
         )
       end
     end
-
-    context 'when some params are given' do
-      it 'overrides fields with provided values' do
-        npc = described_class.generate(name: 'Brum', job: 'Dragon Dentist')
-
-        expect(npc[:name]).to eq('Brum')
-        expect(npc[:job]).to eq('Dragon Dentist')
-        expect(npc[:quirk]).to be_a(String)
-        expect(npc[:species]).to be_in(NpcAttributes.species)
-      end
-    end
   end
 end

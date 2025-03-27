@@ -27,7 +27,7 @@ class NpcsController < ApplicationController
   end
 
   def generate
-    npc_data = NpcGeneratorService.generate(params.permit(:name, :job, :quirk, :mood, :species, :alignment))
+    npc_data = NpcGeneratorService.generate
     render json: npc_data
   end
 

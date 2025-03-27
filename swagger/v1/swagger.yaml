@@ -343,8 +343,4 @@ paths:
                   example: True Neutral
 servers:
 - url: http://localhost:3000
-  description: Local server
-- url: https://{defaultHost}
-  variables:
-    defaultHost:
-      default: www.example.com
+  description: Current environment server

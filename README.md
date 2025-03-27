@@ -55,6 +55,8 @@ To generate a report manually:
 ```bash
 COVERAGE=true bundle exec rspec
 ```
+![image](https://github.com/user-attachments/assets/fcaf0120-d08d-4fdd-a535-f76191296874)
+
 
 ---
 

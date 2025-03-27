@@ -342,5 +342,5 @@ paths:
                   - Chaotic Evil
                   example: True Neutral
 servers:
-- url: http://localhost:3000
+- url: https://quirky-npc-service.onrender.com
   description: Current environment server

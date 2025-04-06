@@ -3,7 +3,7 @@ class NpcsController < ApplicationController
     filtered = Npc.all
     filtered = filtered.by_species(params[:species])
     filtered = filtered.by_alignment(params[:alignment])
-  
+
     @pagy, @npcs = pagy(filtered)
     render json: {
       npcs: ActiveModelSerializers::SerializableResource.new(@npcs),

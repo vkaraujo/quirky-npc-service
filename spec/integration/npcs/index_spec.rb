@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'swagger_helper'
 
 RSpec.describe 'NPCs API', openapi_spec: 'v1/swagger.yaml', type: :request do
@@ -59,23 +61,23 @@ RSpec.describe 'NPCs API', openapi_spec: 'v1/swagger.yaml', type: :request do
           npcs: [
             {
               id: 1,
-              name: "Zarnak Doomwhisper",
-              job: "Dragon Dentist",
-              quirk: "Obsessed with ducks",
-              mood: "Quietly panicked",
-              species: "Half-Orc",
-              alignment: "Chaotic Evil",
-              greeting: "Greetings, I am Zarnak Doomwhisper, your humble Dragon Dentist!"
+              name: 'Zarnak Doomwhisper',
+              job: 'Dragon Dentist',
+              quirk: 'Obsessed with ducks',
+              mood: 'Quietly panicked',
+              species: 'Half-Orc',
+              alignment: 'Chaotic Evil',
+              greeting: 'Greetings, I am Zarnak Doomwhisper, your humble Dragon Dentist!'
             },
             {
               id: 2,
-              name: "Tilda Fizzlepot",
-              job: "Potion Tester",
-              quirk: "Only speaks in rhymes",
-              mood: "Suspiciously friendly",
-              species: "Gnome",
-              alignment: "Chaotic Neutral",
-              greeting: "Greetings, I am Tilda Fizzlepot, your humble Potion Tester!"
+              name: 'Tilda Fizzlepot',
+              job: 'Potion Tester',
+              quirk: 'Only speaks in rhymes',
+              mood: 'Suspiciously friendly',
+              species: 'Gnome',
+              alignment: 'Chaotic Neutral',
+              greeting: 'Greetings, I am Tilda Fizzlepot, your humble Potion Tester!'
             }
           ],
           pagination: {

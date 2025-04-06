@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'swagger_helper'
 
 RSpec.describe 'NPCs API', openapi_spec: 'v1/swagger.yaml', type: :request do

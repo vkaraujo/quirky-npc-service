@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'swagger_helper'
 
 RSpec.describe 'NPCs API', openapi_spec: 'v1/swagger.yaml', type: :request do
@@ -33,24 +35,24 @@ RSpec.describe 'NPCs API', openapi_spec: 'v1/swagger.yaml', type: :request do
       response '201', 'NPC created' do
         example 'application/json', :npc_response, {
           id: 42,
-          name: "Snorgus the Flatulent",
-          job: "Goblin Negotiator",
-          quirk: "Believes they are a potato",
-          mood: "Dramatically bored",
-          species: "Goblin",
-          alignment: "Chaotic Neutral",
-          greeting: "Greetings, I am Snorgus the Flatulent, your humble Goblin Negotiator!"
+          name: 'Snorgus the Flatulent',
+          job: 'Goblin Negotiator',
+          quirk: 'Believes they are a potato',
+          mood: 'Dramatically bored',
+          species: 'Goblin',
+          alignment: 'Chaotic Neutral',
+          greeting: 'Greetings, I am Snorgus the Flatulent, your humble Goblin Negotiator!'
         }
 
         let(:npc) do
           {
             npc: {
-              name: "Snorgus the Flatulent",
-              job: "Goblin Negotiator",
-              quirk: "Believes they are a potato",
-              mood: "Dramatically bored",
-              species: "Goblin",
-              alignment: "Chaotic Neutral"
+              name: 'Snorgus the Flatulent',
+              job: 'Goblin Negotiator',
+              quirk: 'Believes they are a potato',
+              mood: 'Dramatically bored',
+              species: 'Goblin',
+              alignment: 'Chaotic Neutral'
             }
           }
         end

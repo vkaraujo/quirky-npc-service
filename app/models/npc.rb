@@ -11,6 +11,7 @@ class Npc < ApplicationRecord
 
     normalized = species.strip.titleize
     raise ArgumentError, "Invalid species: #{species}" unless SPECIES.include?(normalized)
+
     where(species: normalized)
   end
 
@@ -19,6 +20,7 @@ class Npc < ApplicationRecord
 
     normalized = alignment.strip.titleize
     raise ArgumentError, "Invalid alignment: #{alignment}" unless ALIGNMENTS.include?(normalized)
+
     where(alignment: normalized)
   end
 

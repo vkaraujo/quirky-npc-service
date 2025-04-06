@@ -21,5 +21,4 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_26_143651) do
     t.string "species"
     t.string "alignment"
   end
-
 end

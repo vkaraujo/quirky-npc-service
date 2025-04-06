@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'swagger_helper'
 
 RSpec.describe 'NPCs API', openapi_spec: 'v1/swagger.yaml', type: :request do
@@ -47,7 +49,7 @@ RSpec.describe 'NPCs API', openapi_spec: 'v1/swagger.yaml', type: :request do
       end
 
       response '404', 'NPC not found' do
-        let(:id) { 99999 }
+        let(:id) { 99_999 }
         let(:npc) { { npc: { mood: 'dramatically bored' } } }
         run_test!
       end

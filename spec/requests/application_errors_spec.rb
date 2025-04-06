@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'ApplicationController error handling', type: :request do
@@ -17,7 +19,7 @@ RSpec.describe 'ApplicationController error handling', type: :request do
 
   describe 'POST /npcs with missing params' do
     it 'returns 400 when npc param is missing' do
-      post '/npcs', params: {} # Missing required npc param
+      post '/npcs', params: {}
 
       expect(response).to have_http_status(:bad_request)
       json = JSON.parse(response.body)
@@ -30,9 +32,9 @@ RSpec.describe 'ApplicationController error handling', type: :request do
   describe 'GET /npcs with invalid enum filter' do
     it 'returns 422 for invalid enum via simulated error' do
       allow(Npc).to receive(:by_alignment).and_raise(ArgumentError, 'invalid value for alignment')
-    
+
       get '/npcs', params: { alignment: 'Invalid' }
-    
+
       expect(response).to have_http_status(:unprocessable_entity)
     end
   end

@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 class NpcGeneratorService
   def self.generate
     {
-      name:     NpcAttributes.names.sample,
-      job:      NpcAttributes.jobs.sample,
-      quirk:    NpcAttributes.quirks.sample,
-      mood:     NpcAttributes.moods.sample,
-      species:  NpcAttributes.species.sample,
+      name:      NpcAttributes.names.sample,
+      job:       NpcAttributes.jobs.sample,
+      quirk:     NpcAttributes.quirks.sample,
+      mood:      NpcAttributes.moods.sample,
+      species:   NpcAttributes.species.sample,
       alignment: NpcAttributes.alignments.sample
     }
   end

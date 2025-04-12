@@ -1,5 +1,14 @@
 # Quirky NPC Service 🎲
 
+![Ruby](https://img.shields.io/badge/Ruby-3.2.4-red?logo=ruby)
+![Rails](https://img.shields.io/badge/Rails-7.1.5.1-cc0000?logo=rubyonrails)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue?logo=postgresql)
+![Coverage](https://img.shields.io/badge/coverage-94.94%25-brightgreen)
+[![Swagger](https://img.shields.io/badge/docs-Swagger-blue?logo=swagger)](https://quirky-npc-service.onrender.com/api-docs)
+[![Deploy](https://img.shields.io/badge/deployed-Render-5b9bd5?logo=render)](https://quirky-npc-service.onrender.com)
+![Made with Magic](https://img.shields.io/badge/Made%20with-Magic%E2%9C%A8-purple)
+![NPC Approved](https://img.shields.io/badge/NPCs-Quirky%20AF-ff69b4)
+
 An API-only Ruby on Rails app that generates and manages silly, Dungeons & Dragons-inspired NPCs with quirky names, jobs, moods, and traits.
 
 > 🧠 Perfect for D&D game masters, fantasy writers, or anyone who enjoys a good goblin joke.

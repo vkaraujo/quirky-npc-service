@@ -3,11 +3,11 @@
 class NpcGeneratorService
   def self.generate
     {
-      name:      NpcAttributes.names.sample,
-      job:       NpcAttributes.jobs.sample,
-      quirk:     NpcAttributes.quirks.sample,
-      mood:      NpcAttributes.moods.sample,
-      species:   NpcAttributes.species.sample,
+      name: NpcNameService.generate_unique_name,
+      job: NpcAttributes.jobs.sample,
+      quirk: NpcAttributes.quirks.sample,
+      mood: NpcAttributes.moods.sample,
+      species: NpcAttributes.species.sample,
       alignment: NpcAttributes.alignments.sample
     }
   end

@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
-require 'faker'
-
 Npcs = []
 
-NpcAttributes.names.shuffle.take(20).each do |unique_name|
+20.times do
   Npcs << Npc.create!(
-    name: unique_name,
+    name: NpcNameService.generate_unique_name,
     job: NpcAttributes.jobs.sample,
     quirk: NpcAttributes.quirks.sample,
     mood: NpcAttributes.moods.sample,
@@ -15,4 +13,4 @@ NpcAttributes.names.shuffle.take(20).each do |unique_name|
   )
 end
 
-puts "🌟 Seeded #{Npcs.count} unique NPCs!"
+puts "🌟 Seeded #{Npcs.count} NPCs!"

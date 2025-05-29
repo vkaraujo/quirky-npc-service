@@ -28,7 +28,16 @@ class NpcsController < ApplicationController
 
   def generate
     npc_data = NpcGeneratorService.generate
-    render json: npc_data
+    npc = Npc.new(npc_data)
+
+    if npc.save
+      render json: npc, status: :ok
+    else
+      render json: {
+        error: 'Unprocessable Entity',
+        message: npc.errors.full_messages.to_sentence
+      }, status: :unprocessable_entity
+    end
   end
 
   def create

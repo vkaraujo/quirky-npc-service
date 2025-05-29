@@ -4,24 +4,45 @@ require 'swagger_helper'
 
 RSpec.describe 'NPCs API', openapi_spec: 'v1/swagger.yaml', type: :request do
   path '/npcs/generate' do
-    post 'Generate a random, ephemeral NPC' do
-      description 'This endpoint creates a new NPC using randomized values for every attribute. You don’t need to send anything — just click Execute!'
+    post 'Generate and save a random NPC' do
+      description 'Generates and saves a random NPC with randomized attributes. Returns the created NPC or an error if generation fails.'
       tags 'Generation'
       produces 'application/json'
+      consumes 'application/json'
 
-      response '200', 'NPC generated' do
+      parameter name: :body, in: :body, required: false, schema: {
+        type: :object
+      }
+
+      response '200', 'NPC generated and saved' do
+        schema '$ref' => '#/components/schemas/NpcResponse'
+
+        example 'application/json', :npc_generated, {
+          id: 101,
+          name: 'Snorgus the Flatulent',
+          job: 'Goblin Negotiator',
+          quirk: 'Believes they are a potato',
+          mood: 'Dramatically bored',
+          species: 'Goblin',
+          alignment: 'Chaotic Neutral',
+          greeting: 'Greetings, I am Snorgus the Flatulent, your humble Goblin Negotiator!'
+        }
+
         run_test!
       end
 
-      response '400', 'Missing npc param' do
-        schema '$ref' => '#/components/schemas/BadRequestResponse'
+      response '422', 'Validation error (e.g., duplicate name)' do
+        schema '$ref' => '#/components/schemas/ErrorResponse'
 
-        example 'application/json', :bad_request, {
-          error: 'Bad Request',
-          message: 'param is missing or the value is empty: npc'
+        example 'application/json', :validation_error, {
+          error: 'Unprocessable Entity',
+          message: 'Name has already been taken'
         }
 
-        let(:npc) { nil }
+        before do
+          allow(NpcAttributes).to receive(:names).and_return(['Snorgus the Flatulent'])
+          create(:npc, name: 'Snorgus the Flatulent')
+        end
 
         run_test!
       end

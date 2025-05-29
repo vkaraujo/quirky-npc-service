@@ -47,7 +47,7 @@ paths:
               schema:
                 "$ref": "#/components/schemas/BadRequestResponse"
         '422':
-          description: Validation error
+          description: Validation error - duplicate name
           content:
             application/json:
               examples:
@@ -55,6 +55,10 @@ paths:
                   value:
                     error: Unprocessable Entity
                     message: Name can't be blank
+                duplicate_name_error:
+                  value:
+                    error: Unprocessable Entity
+                    message: Name has already been taken
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
       requestBody:
@@ -262,25 +266,42 @@ paths:
               "$ref": "#/components/schemas/NpcUpdateRequest"
   "/npcs/generate":
     post:
-      summary: Generate a random, ephemeral NPC
-      description: This endpoint creates a new NPC using randomized values for every
-        attribute. You don’t need to send anything — just click Execute!
+      summary: Generate and save a random NPC
+      description: Generates and saves a random NPC with randomized attributes. Returns
+        the created NPC or an error if generation fails.
       tags:
       - Generation
+      parameters: []
       responses:
         '200':
-          description: NPC generated
-        '400':
-          description: Missing npc param
+          description: NPC generated and saved
           content:
             application/json:
               examples:
-                bad_request:
+                npc_generated:
                   value:
-                    error: Bad Request
-                    message: 'param is missing or the value is empty: npc'
+                    id: 101
+                    name: Snorgus the Flatulent
+                    job: Goblin Negotiator
+                    quirk: Believes they are a potato
+                    mood: Dramatically bored
+                    species: Goblin
+                    alignment: Chaotic Neutral
+                    greeting: Greetings, I am Snorgus the Flatulent, your humble Goblin
+                      Negotiator!
               schema:
-                "$ref": "#/components/schemas/BadRequestResponse"
+                "$ref": "#/components/schemas/NpcResponse"
+        '422':
+          description: Validation error (e.g., duplicate name)
+          content:
+            application/json:
+              examples:
+                validation_error:
+                  value:
+                    error: Unprocessable Entity
+                    message: Name has already been taken
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
         '429':
           description: Rate limit exceeded
           content:
@@ -292,6 +313,11 @@ paths:
                     message: You have hit the rate limit for NPC generation
               schema:
                 "$ref": "#/components/schemas/RateLimitResponse"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
 servers:
 - url: http://localhost:3000
   description: Current environment server

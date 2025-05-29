@@ -1,7 +1,8 @@
 class Npc < ApplicationRecord
-  validates :name, :job, :quirk, :mood, presence: true
+  validates :job, :quirk, :mood, presence: true
   validates :species, inclusion: { in: NpcAttributes.species }
   validates :alignment, inclusion: { in: NpcAttributes.alignments }
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
 
   SPECIES = NpcAttributes.species
   ALIGNMENTS = NpcAttributes.alignments

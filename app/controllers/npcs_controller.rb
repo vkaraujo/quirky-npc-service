@@ -32,12 +32,15 @@ class NpcsController < ApplicationController
   end
 
   def create
-    @npc = Npc.new(npc_params)
+    npc = Npc.new(npc_params)
 
-    if @npc.save
-      render json: @npc, status: :created
+    if npc.save
+      render json: npc, status: :created
     else
-      render json: { errors: @npc.errors.full_messages }, status: :unprocessable_entity
+      render json: {
+        error: 'Unprocessable Entity',
+        message: npc.errors.full_messages.to_sentence
+      }, status: :unprocessable_entity
     end
   end
 

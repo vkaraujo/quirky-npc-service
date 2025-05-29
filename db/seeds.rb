@@ -4,9 +4,9 @@ require 'faker'
 
 Npcs = []
 
-20.times do
+NpcAttributes.names.shuffle.take(20).each do |unique_name|
   Npcs << Npc.create!(
-    name: NpcAttributes.names.sample,
+    name: unique_name,
     job: NpcAttributes.jobs.sample,
     quirk: NpcAttributes.quirks.sample,
     mood: NpcAttributes.moods.sample,
@@ -15,4 +15,4 @@ Npcs = []
   )
 end
 
-puts "🌟 Seeded #{Npcs.count} NPCs!"
+puts "🌟 Seeded #{Npcs.count} unique NPCs!"

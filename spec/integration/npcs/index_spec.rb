@@ -7,6 +7,7 @@ RSpec.describe 'NPCs API', openapi_spec: 'v1/swagger.yaml', type: :request do
     get 'List all NPCs' do
       tags 'NPC Management'
       produces 'application/json'
+
       parameter name: :species, in: :query, schema: {
         type: :string,
         enum: NpcAttributes.species
@@ -28,19 +29,7 @@ RSpec.describe 'NPCs API', openapi_spec: 'v1/swagger.yaml', type: :request do
                properties: {
                  npcs: {
                    type: :array,
-                   items: {
-                     type: :object,
-                     properties: {
-                       id: { type: :integer },
-                       name: { type: :string },
-                       job: { type: :string },
-                       quirk: { type: :string },
-                       mood: { type: :string },
-                       species: { type: :string },
-                       alignment: { type: :string },
-                       greeting: { type: :string }
-                     }
-                   }
+                   items: { '$ref' => '#/components/schemas/Npc' }
                  },
                  pagination: {
                    type: :object,
@@ -86,6 +75,18 @@ RSpec.describe 'NPCs API', openapi_spec: 'v1/swagger.yaml', type: :request do
             pages: 1,
             count: 2
           }
+        }
+
+        run_test!
+      end
+
+      response '422', 'Invalid filter value' do
+        let(:alignment) { 'Invalid' }
+
+        schema '$ref' => '#/components/schemas/ErrorResponse'
+        example 'application/json', :invalid_filter, {
+          error: 'Unprocessable Entity',
+          message: 'invalid value for alignment'
         }
 
         run_test!

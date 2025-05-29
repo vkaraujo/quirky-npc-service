@@ -12,6 +12,7 @@ paths:
   "/npcs":
     post:
       summary: Create a new NPC
+      description: Creates and saves a new NPC with custom attributes.
       tags:
       - NPC Management
       parameters: []
@@ -32,59 +33,35 @@ paths:
                     alignment: Chaotic Neutral
                     greeting: Greetings, I am Snorgus the Flatulent, your humble Goblin
                       Negotiator!
+              schema:
+                "$ref": "#/components/schemas/NpcResponse"
+        '400':
+          description: Missing npc param
+          content:
+            application/json:
+              examples:
+                bad_request:
+                  value:
+                    error: Bad Request
+                    message: 'param is missing or the value is empty: npc'
+              schema:
+                "$ref": "#/components/schemas/BadRequestResponse"
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              examples:
+                validation_error:
+                  value:
+                    error: Unprocessable Entity
+                    message: Name can't be blank
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
       requestBody:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                npc:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                      example: Snorgus the Flatulent
-                    job:
-                      type: string
-                      example: Goblin Negotiator
-                    quirk:
-                      type: string
-                      example: Believes they are a potato
-                    mood:
-                      type: string
-                      example: Dramatically bored
-                    species:
-                      type: string
-                      enum:
-                      - Human
-                      - Elf
-                      - Dwarf
-                      - Halfling
-                      - Gnome
-                      - Half-Orc
-                      - Dragonborn
-                      - Tiefling
-                      - Goblin
-                      - Fairy
-                    alignment:
-                      type: string
-                      enum:
-                      - Lawful Good
-                      - Neutral Good
-                      - Chaotic Good
-                      - Lawful Neutral
-                      - True Neutral
-                      - Chaotic Neutral
-                      - Lawful Evil
-                      - Neutral Evil
-                      - Chaotic Evil
-                  required:
-                  - name
-                  - job
-                  - quirk
-                  - mood
-                  - species
-                  - alignment
+              "$ref": "#/components/schemas/NpcRequest"
     get:
       summary: List all NPCs
       tags:
@@ -164,24 +141,7 @@ paths:
                   npcs:
                     type: array
                     items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                        name:
-                          type: string
-                        job:
-                          type: string
-                        quirk:
-                          type: string
-                        mood:
-                          type: string
-                        species:
-                          type: string
-                        alignment:
-                          type: string
-                        greeting:
-                          type: string
+                      "$ref": "#/components/schemas/Npc"
                   pagination:
                     type: object
                     properties:
@@ -193,6 +153,17 @@ paths:
                         type: integer
                       count:
                         type: integer
+        '422':
+          description: Invalid filter value
+          content:
+            application/json:
+              examples:
+                invalid_filter:
+                  value:
+                    error: Unprocessable Entity
+                    message: invalid value for alignment
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
   "/npcs/{id}":
     delete:
       summary: Delete an NPC
@@ -209,6 +180,15 @@ paths:
           description: NPC deleted
         '404':
           description: NPC not found
+          content:
+            application/json:
+              examples:
+                npc_not_found:
+                  value:
+                    error: Not Found
+                    message: Couldn't find Npc with id=99999
+              schema:
+                "$ref": "#/components/schemas/NotFoundResponse"
     get:
       summary: Retrieve a specific NPC by ID
       tags:
@@ -222,8 +202,33 @@ paths:
       responses:
         '200':
           description: NPC found
+          content:
+            application/json:
+              examples:
+                npc_response:
+                  value:
+                    id: 1
+                    name: Tilda Fizzlepot
+                    job: Potion Tester
+                    quirk: Only speaks in rhymes
+                    mood: Suspiciously friendly
+                    species: Gnome
+                    alignment: Chaotic Neutral
+                    greeting: Greetings, I am Tilda Fizzlepot, your humble Potion
+                      Tester!
+              schema:
+                "$ref": "#/components/schemas/Npc"
         '404':
           description: NPC not found
+          content:
+            application/json:
+              examples:
+                not_found_error:
+                  value:
+                    error: Not Found
+                    message: Couldn't find Npc with id=99
+              schema:
+                "$ref": "#/components/schemas/NotFoundResponse"
     patch:
       summary: Update an existing NPC
       tags:
@@ -239,54 +244,22 @@ paths:
           description: NPC updated
         '404':
           description: NPC not found
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              examples:
+                validation_error:
+                  value:
+                    error: Unprocessable Entity
+                    message: Name can't be blank
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
       requestBody:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                npc:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                      example: Tilda Fizzlepot
-                    job:
-                      type: string
-                      example: Potion Tester
-                    quirk:
-                      type: string
-                      example: Only speaks in rhymes
-                    mood:
-                      type: string
-                      example: Melancholic but hopeful
-                    species:
-                      type: string
-                      enum:
-                      - Human
-                      - Elf
-                      - Dwarf
-                      - Halfling
-                      - Gnome
-                      - Half-Orc
-                      - Dragonborn
-                      - Tiefling
-                      - Goblin
-                      - Fairy
-                      example: Halfling
-                    alignment:
-                      type: string
-                      enum:
-                      - Lawful Good
-                      - Neutral Good
-                      - Chaotic Good
-                      - Lawful Neutral
-                      - True Neutral
-                      - Chaotic Neutral
-                      - Lawful Evil
-                      - Neutral Evil
-                      - Chaotic Evil
-                      example: Lawful Good
+              "$ref": "#/components/schemas/NpcUpdateRequest"
   "/npcs/generate":
     post:
       summary: Generate a random, ephemeral NPC
@@ -297,6 +270,210 @@ paths:
       responses:
         '200':
           description: NPC generated
+        '400':
+          description: Missing npc param
+          content:
+            application/json:
+              examples:
+                bad_request:
+                  value:
+                    error: Bad Request
+                    message: 'param is missing or the value is empty: npc'
+              schema:
+                "$ref": "#/components/schemas/BadRequestResponse"
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              examples:
+                rate_limit_error:
+                  value:
+                    error: Too Many Requests
+                    message: You have hit the rate limit for NPC generation
+              schema:
+                "$ref": "#/components/schemas/RateLimitResponse"
 servers:
-- url: https://quirky-npc-service.onrender.com
+- url: http://localhost:3000
   description: Current environment server
+components:
+  schemas:
+    Npc:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 42
+        name:
+          type: string
+          example: Tilda Fizzlepot
+        job:
+          type: string
+          example: sock merchant
+        quirk:
+          type: string
+          example: hums constantly
+        mood:
+          type: string
+          example: quietly panicked
+        species:
+          type: string
+          example: Elf
+        alignment:
+          type: string
+          example: Chaotic Good
+        created_at:
+          type: string
+          format: date_time
+        updated_at:
+          type: string
+          format: date_time
+        generated_by:
+          type: string
+          example: generator
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Unprocessable Entity
+        message:
+          type: string
+          example: Name can't be blank
+    NotFoundResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Not Found
+        message:
+          type: string
+          example: Couldn't find Npc with id=999
+    BadRequestResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Bad Request
+        message:
+          type: string
+          example: 'param is missing or the value is empty: npc'
+    RateLimitResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Too Many Requests
+        message:
+          type: string
+          example: You have hit the rate limit for NPC generation
+    NpcCreateAttributes:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Snorgus the Flatulent
+        job:
+          type: string
+          example: Goblin Negotiator
+        quirk:
+          type: string
+          example: Believes they are a potato
+        mood:
+          type: string
+          example: Dramatically bored
+        species:
+          type: string
+          enum:
+          - Human
+          - Elf
+          - Dwarf
+          - Halfling
+          - Gnome
+          - Half-Orc
+          - Dragonborn
+          - Tiefling
+          - Goblin
+          - Fairy
+        alignment:
+          type: string
+          enum:
+          - Lawful Good
+          - Neutral Good
+          - Chaotic Good
+          - Lawful Neutral
+          - True Neutral
+          - Chaotic Neutral
+          - Lawful Evil
+          - Neutral Evil
+          - Chaotic Evil
+      required:
+      - name
+      - job
+      - quirk
+      - mood
+      - species
+      - alignment
+    NpcRequest:
+      type: object
+      properties:
+        npc:
+          "$ref": "#/components/schemas/NpcCreateAttributes"
+      required:
+      - npc
+    NpcResponse:
+      allOf:
+      - "$ref": "#/components/schemas/Npc"
+      - type: object
+        properties:
+          greeting:
+            type: string
+            example: Greetings, I am Snorgus the Flatulent, your humble Goblin Negotiator!
+    NpcUpdateAttributes:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Tilda Fizzlepot
+        job:
+          type: string
+          example: Potion Tester
+        quirk:
+          type: string
+          example: Only speaks in rhymes
+        mood:
+          type: string
+          example: Melancholic but hopeful
+        species:
+          type: string
+          enum:
+          - Human
+          - Elf
+          - Dwarf
+          - Halfling
+          - Gnome
+          - Half-Orc
+          - Dragonborn
+          - Tiefling
+          - Goblin
+          - Fairy
+          example: Halfling
+        alignment:
+          type: string
+          enum:
+          - Lawful Good
+          - Neutral Good
+          - Chaotic Good
+          - Lawful Neutral
+          - True Neutral
+          - Chaotic Neutral
+          - Lawful Evil
+          - Neutral Evil
+          - Chaotic Evil
+          example: Lawful Good
+    NpcUpdateRequest:
+      type: object
+      properties:
+        npc:
+          "$ref": "#/components/schemas/NpcUpdateAttributes"
+      required:
+      - npc

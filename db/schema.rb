@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_26_143651) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_29_002245) do
   create_table "npcs", force: :cascade do |t|
     t.string "name"
     t.string "job"
@@ -20,5 +20,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_26_143651) do
     t.datetime "updated_at", null: false
     t.string "species"
     t.string "alignment"
+    t.index ["name"], name: "index_npcs_on_name", unique: true
   end
+
 end

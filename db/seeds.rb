@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
-require 'faker'
-
 Npcs = []
 
 20.times do
   Npcs << Npc.create!(
-    name: NpcAttributes.names.sample,
+    name: NpcNameService.generate_unique_name,
     job: NpcAttributes.jobs.sample,
     quirk: NpcAttributes.quirks.sample,
     mood: NpcAttributes.moods.sample,

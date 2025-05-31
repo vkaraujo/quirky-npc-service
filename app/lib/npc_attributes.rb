@@ -9,4 +9,5 @@ class NpcAttributes
   def self.moods      = all[:moods]
   def self.species    = all[:species]
   def self.alignments = all[:alignments]
+  def self.suffixes = all[:suffixes]
 end

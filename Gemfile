@@ -60,3 +60,5 @@ gem 'active_model_serializers'
 gem 'rswag'
 
 gem 'pagy'
+
+gem 'rack-attack'

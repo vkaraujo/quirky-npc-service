@@ -7,6 +7,7 @@ RSpec.describe 'NPCs API', openapi_spec: 'v1/swagger.yaml', type: :request do
     get 'List all NPCs' do
       tags 'NPC Management'
       produces 'application/json'
+
       parameter name: :species, in: :query, schema: {
         type: :string,
         enum: NpcAttributes.species
@@ -17,10 +18,16 @@ RSpec.describe 'NPCs API', openapi_spec: 'v1/swagger.yaml', type: :request do
         enum: NpcAttributes.alignments
       }, description: 'Filter NPCs by D&D alignment (e.g. Chaotic Neutral)'
 
+      parameter name: :mood, in: :query, type: :string, required: false, description: 'Filter by mood'
+      parameter name: :job, in: :query, type: :string, required: false, description: 'Filter by job'
+      parameter name: :quirk, in: :query, type: :string, required: false, description: 'Filter by quirk'
       parameter name: :page, in: :query, type: :integer, description: 'Page number'
 
       let(:species) { nil }
       let(:alignment) { nil }
+      let(:mood) { nil }
+      let(:job) { nil }
+      let(:quirk) { nil }
       let(:page) { 1 }
 
       response '200', 'NPCs retrieved' do
@@ -28,19 +35,7 @@ RSpec.describe 'NPCs API', openapi_spec: 'v1/swagger.yaml', type: :request do
                properties: {
                  npcs: {
                    type: :array,
-                   items: {
-                     type: :object,
-                     properties: {
-                       id: { type: :integer },
-                       name: { type: :string },
-                       job: { type: :string },
-                       quirk: { type: :string },
-                       mood: { type: :string },
-                       species: { type: :string },
-                       alignment: { type: :string },
-                       greeting: { type: :string }
-                     }
-                   }
+                   items: { '$ref' => '#/components/schemas/Npc' }
                  },
                  pagination: {
                    type: :object,

@@ -4,13 +4,16 @@ require 'rails_helper'
 
 RSpec.describe Npc, type: :model do
   describe 'validations' do
+    before { create(:npc, name: 'Zarnak') }
+  
     it { should validate_presence_of(:name) }
+    it { should validate_uniqueness_of(:name).case_insensitive }
     it { should validate_presence_of(:job) }
     it { should validate_presence_of(:quirk) }
     it { should validate_presence_of(:mood) }
     it { should validate_inclusion_of(:species).in_array(NpcAttributes.species) }
     it { should validate_inclusion_of(:alignment).in_array(NpcAttributes.alignments) }
-  end
+  end  
 
   describe '#greeting' do
     it 'returns a formatted greeting string' do

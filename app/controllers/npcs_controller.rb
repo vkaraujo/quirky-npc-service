@@ -3,6 +3,9 @@ class NpcsController < ApplicationController
     filtered = Npc.all
     filtered = filtered.by_species(params[:species])
     filtered = filtered.by_alignment(params[:alignment])
+    filtered = filtered.by_mood(params[:mood]) if params[:mood]
+    filtered = filtered.by_job(params[:job]) if params[:job]
+    filtered = filtered.by_quirk(params[:quirk]) if params[:quirk]
 
     @pagy, @npcs = pagy(filtered)
     render json: {
@@ -28,16 +31,28 @@ class NpcsController < ApplicationController
 
   def generate
     npc_data = NpcGeneratorService.generate
-    render json: npc_data
+    npc = Npc.new(npc_data)
+
+    if npc.save
+      render json: npc, status: :ok
+    else
+      render json: {
+        error: 'Unprocessable Entity',
+        message: npc.errors.full_messages.to_sentence
+      }, status: :unprocessable_entity
+    end
   end
 
   def create
-    @npc = Npc.new(npc_params)
+    npc = Npc.new(npc_params)
 
-    if @npc.save
-      render json: @npc, status: :created
+    if npc.save
+      render json: npc, status: :created
     else
-      render json: { errors: @npc.errors.full_messages }, status: :unprocessable_entity
+      render json: {
+        error: 'Unprocessable Entity',
+        message: npc.errors.full_messages.to_sentence
+      }, status: :unprocessable_entity
     end
   end
 

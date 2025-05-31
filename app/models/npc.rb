@@ -1,7 +1,8 @@
 class Npc < ApplicationRecord
-  validates :name, :job, :quirk, :mood, presence: true
+  validates :job, :quirk, :mood, presence: true
   validates :species, inclusion: { in: NpcAttributes.species }
   validates :alignment, inclusion: { in: NpcAttributes.alignments }
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
 
   SPECIES = NpcAttributes.species
   ALIGNMENTS = NpcAttributes.alignments
@@ -23,6 +24,10 @@ class Npc < ApplicationRecord
 
     where(alignment: normalized)
   end
+
+  scope :by_mood, ->(mood) { where(mood: mood) }
+  scope :by_job, ->(job) { where(job: job) }
+  scope :by_quirk, ->(quirk) { where(quirk: quirk) }
 
   def greeting
     "Greetings, I am #{self.name}, your humble #{self.job}!"

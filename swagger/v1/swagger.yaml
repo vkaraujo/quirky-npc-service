@@ -102,6 +102,24 @@ paths:
           - Neutral Evil
           - Chaotic Evil
         description: Filter NPCs by D&D alignment (e.g. Chaotic Neutral)
+      - name: mood
+        in: query
+        required: false
+        description: Filter by mood
+        schema:
+          type: string
+      - name: job
+        in: query
+        required: false
+        description: Filter by job
+        schema:
+          type: string
+      - name: quirk
+        in: query
+        required: false
+        description: Filter by quirk
+        schema:
+          type: string
       - name: page
         in: query
         description: Page number
@@ -157,17 +175,6 @@ paths:
                         type: integer
                       count:
                         type: integer
-        '422':
-          description: Invalid filter value
-          content:
-            application/json:
-              examples:
-                invalid_filter:
-                  value:
-                    error: Unprocessable Entity
-                    message: invalid value for alignment
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
   "/npcs/{id}":
     delete:
       summary: Delete an NPC

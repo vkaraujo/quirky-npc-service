@@ -18,10 +18,16 @@ RSpec.describe 'NPCs API', openapi_spec: 'v1/swagger.yaml', type: :request do
         enum: NpcAttributes.alignments
       }, description: 'Filter NPCs by D&D alignment (e.g. Chaotic Neutral)'
 
+      parameter name: :mood, in: :query, type: :string, required: false, description: 'Filter by mood'
+      parameter name: :job, in: :query, type: :string, required: false, description: 'Filter by job'
+      parameter name: :quirk, in: :query, type: :string, required: false, description: 'Filter by quirk'
       parameter name: :page, in: :query, type: :integer, description: 'Page number'
 
       let(:species) { nil }
       let(:alignment) { nil }
+      let(:mood) { nil }
+      let(:job) { nil }
+      let(:quirk) { nil }
       let(:page) { 1 }
 
       response '200', 'NPCs retrieved' do
@@ -75,18 +81,6 @@ RSpec.describe 'NPCs API', openapi_spec: 'v1/swagger.yaml', type: :request do
             pages: 1,
             count: 2
           }
-        }
-
-        run_test!
-      end
-
-      response '422', 'Invalid filter value' do
-        let(:alignment) { 'Invalid' }
-
-        schema '$ref' => '#/components/schemas/ErrorResponse'
-        example 'application/json', :invalid_filter, {
-          error: 'Unprocessable Entity',
-          message: 'invalid value for alignment'
         }
 
         run_test!

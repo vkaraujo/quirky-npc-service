@@ -25,6 +25,10 @@ class Npc < ApplicationRecord
     where(alignment: normalized)
   end
 
+  scope :by_mood, ->(mood) { where(mood: mood) }
+  scope :by_job, ->(job) { where(job: job) }
+  scope :by_quirk, ->(quirk) { where(quirk: quirk) }
+
   def greeting
     "Greetings, I am #{self.name}, your humble #{self.job}!"
   end

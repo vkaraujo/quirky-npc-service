@@ -3,6 +3,9 @@ class NpcsController < ApplicationController
     filtered = Npc.all
     filtered = filtered.by_species(params[:species])
     filtered = filtered.by_alignment(params[:alignment])
+    filtered = filtered.by_mood(params[:mood]) if params[:mood]
+    filtered = filtered.by_job(params[:job]) if params[:job]
+    filtered = filtered.by_quirk(params[:quirk]) if params[:quirk]
 
     @pagy, @npcs = pagy(filtered)
     render json: {

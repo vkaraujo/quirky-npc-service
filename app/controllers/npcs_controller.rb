@@ -36,6 +36,7 @@ class NpcsController < ApplicationController
     if npc.save
       render json: npc, status: :ok
     else
+      Rails.logger.error("Failed to generate NPC: #{npc.errors.full_messages}")
       render json: {
         error: 'Unprocessable Entity',
         message: npc.errors.full_messages.to_sentence

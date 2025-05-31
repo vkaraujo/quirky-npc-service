@@ -309,17 +309,6 @@ paths:
                     message: Name has already been taken
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
-        '429':
-          description: Rate limit exceeded
-          content:
-            application/json:
-              examples:
-                rate_limit_error:
-                  value:
-                    error: Too Many Requests
-                    message: You have hit the rate limit for NPC generation
-              schema:
-                "$ref": "#/components/schemas/RateLimitResponse"
       requestBody:
         content:
           application/json:

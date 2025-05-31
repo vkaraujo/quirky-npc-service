@@ -40,8 +40,8 @@ RSpec.describe 'NPCs API', openapi_spec: 'v1/swagger.yaml', type: :request do
         }
 
         before do
-          allow(NpcAttributes).to receive(:names).and_return(['Snorgus the Flatulent'])
           create(:npc, name: 'Snorgus the Flatulent')
+          allow(NpcGeneratorService).to receive(:generate).and_return({ name: 'Snorgus the Flatulent' })
         end
 
         run_test!
@@ -54,8 +54,6 @@ RSpec.describe 'NPCs API', openapi_spec: 'v1/swagger.yaml', type: :request do
           error: 'Too Many Requests',
           message: 'You have hit the rate limit for NPC generation'
         }
-
-        run_test!
       end
     end
   end

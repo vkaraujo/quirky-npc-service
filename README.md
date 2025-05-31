@@ -28,28 +28,25 @@ An API-only Ruby on Rails app that generates and manages silly, Dungeons & Drago
 
 ---
 
-## 🧪 Tech & Gems
-
-| Purpose               | Gem               |
-|----------------------|-------------------|
-| Pagination           | `pagy`            |
-| JSON Serialization   | `active_model_serializers` |
-| API Docs & Tests     | `rswag`           |
-| Faker-like Generator | `NpcGeneratorService` (custom) |
-| Test Coverage        | `simplecov`       |
-| Model Validation Specs | `shoulda-matchers` |
-| Factories            | `factory_bot_rails` |
-| Request Specs        | `rspec-rails`     |
-
----
-
 ## 📘 API Documentation
 
-Once the server is running:
+> 🔗 Explore the API: [`https://quirky-npc-service.onrender.com/api-docs/index.html`](https://quirky-npc-service.onrender.com/api-docs/index.html)
 
-> 🔗 Visit [`http://localhost:3000/api-docs`](http://localhost:3000/api-docs)
+The **Swagger UI** provides a live, interactive interface to test and understand all available endpoints of the Quirky NPC Service.
 
-Interactive Swagger UI with all available endpoints, request/response examples, and enum options (like `species`, `alignment`, etc.).
+### 🔍 What’s Included:
+
+- **All available endpoints**, grouped by feature (e.g., NPC management, random generation)
+- **Request & response examples** for common use cases
+- **Error responses** and validation details (`400`, `404`, `422`, `429`)
+- **Filterable parameters** like `species`, `alignment`, `mood`, `job`, and `quirk`
+- **Response schemas** with real example NPCs and pagination metadata
+- **Enum value listings** for structured fields (e.g., all D&D alignments)
+- Optional: **Rate limit documentation** (if enabled via `Rack::Attack`)
+
+### 🧪 Try it Out
+
+You can make real requests directly from the docs — great for testing your frontend integration or exploring available features.
 
 ---
 

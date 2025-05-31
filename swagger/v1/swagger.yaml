@@ -315,7 +315,7 @@ paths:
             schema:
               type: object
 servers:
-- url: https://quirky-npc-service.onrender.com/api-docs/index.html
+- url: https://quirky-npc-service.onrender.com
   description: Current environment server
 components:
   schemas:
